@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Temporizador para Streamers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos generales y la paleta de colores */
+        :root {
+            --color-black: #121212;
+            --color-red: #D50000;
+            --color-silver: #B0BEC5;
+            --color-dark-silver: #78909C;
+            --font-family: 'Inter', sans-serif;
+            --stream-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Bloquea la orientación a horizontal y establece el fondo */
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-black);
+            color: white; /* Todos los textos ahora son blancos */
+            font-family: var(--font-family);
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Contenedor principal con Flexbox para el diseño de la superposición */
+        .overlay-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 80px 1fr 80px; 
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            gap: 10px;
+        }
+
+        /* Área superior con el logo y los textos */
+        .top-bar {
+            grid-column: 1 / span 2;
+            grid-row: 1; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            background-color: var(--stream-bg);
+            border-radius: 8px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-area img {
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--color-red);
+            box-shadow: 0 0 10px rgba(213, 0, 0, 0.5);
+        }
+        
+        /* Aumento del tamaño de fuente del título */
+        .logo-text {
+            font-size: 2rem; /* Tamaño más grande */
+            font-weight: 700;
+            color: white; /* Color blanco */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .social-tags {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white; /* Color blanco */
+        }
+
+        /* Contenedor del stream y el temporizador */
+        .main-content {
+            grid-column: 1 / span 2;
+            grid-row: 2; 
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+        }
+
+        /* Espacio para la cámara/video */
+        .stream-space {
+            background-color: rgba(255, 253, 253, 0.05);
+            border: 2px solid var(--color-dark-silver);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: white; /* Color blanco */
+        }
+
+        /* Contenedor del temporizador y el chat */
+        .right-panel {
+            display: grid;
+            grid-template-rows: auto 2fr 3fr; 
+            gap: 10px;
+        }
+
+        /* Estilo del temporizador principal */
+        .main-timer-display {
+            background-color: var(--stream-bg);
+            border: 2px solid var(--color-dark-silver);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 3vw;
+            font-weight: bold;
+            color: var(--color-red);
+            text-shadow: 0 0 10px rgba(213, 0, 0, 0.5);
+            padding: 10px;
+            animation: pulse-glow 2s infinite ease-in-out;
+            height: 80px;
+        }
+
+        @keyframes pulse-glow {
+            0% { text-shadow: 0 0 5px rgba(213, 0, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(213, 0, 0, 0.8), 0 0 30px rgba(213, 0, 0, 0.3); }
+            100% { text-shadow: 0 0 5px rgba(213, 0, 0, 0.5); }
+        }
+
+        /* Panel de control de temporizadores (formulario) */
+        .timer-control-panel {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--color-dark-silver);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+        }
+
+        .add-timer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            font-size: 0.75rem;
+            color: white; /* Color blanco */
+        }
+
+        .input-group input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--color-dark-silver);
+            color: white; /* Color blanco */
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 5px;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: stretch;
+        }
+
+        .btn-save, .btn-saved {
+            padding: 6px;
+            background-color: var(--color-red);
+            border: none;
+            color: var(--color-black);
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            flex-grow: 1;
+        }
+        .btn-save:hover, .btn-saved:hover {
+            background-color: #FF1744;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Área del chat */
+        .chat-panel {
+            background-color: rgb(255, 255, 255);
+            border: 2px solid var(--color-dark-silver);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: white; /* Color blanco */
+        }
+
+        /* Barra de navegación inferior */
+        .bottom-bar {
+            grid-column: 1 / span 2;
+            grid-row: 3; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--stream-bg);
+            border-radius: 8px;
+            padding: 0 10px;
+        }
+        
+        .subscribe-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subscribe-btn {
+            background-color: var(--color-red);
+            color: var(--color-black);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .icon-btn {
+            background-color: var(--color-dark-silver);
+            color: var(--color-black);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .icon-btn:hover {
+            background-color: var(--color-silver);
+            transform: translateY(-2px);
+        }
+        .icon-btn.twitch { background-color: #6441a5; color: white; }
+        .icon-btn.youtube { background-color: #ff0000; color: white; }
+
+        .chat-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white; /* Color blanco */
+            position: relative;
+        }
+        .chat-label::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: white; /* Color blanco */
+        }
+
+        /* Estilos del modal (ventana emergente) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            display: none;
+        }
+
+        .modal-content {
+            background-color: var(--color-black);
+            border: 2px solid var(--color-red);
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--color-dark-silver);
+            padding-bottom: 10px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--color-red);
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: white; /* Color blanco */
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close-btn:hover {
+            color: var(--color-red);
+        }
+
+        .modal-list-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-list-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            border-left: 3px solid var(--color-dark-silver);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-list-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+            border-left-color: var(--color-red);
+        }
+
+        .timer-info {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .timer-name {
+            font-weight: bold;
+        }
+        .timer-remaining {
+            font-size: 0.9rem;
+            color: var(--color-silver);
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--color-silver);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 5px;
+        }
+        .delete-btn:hover {
+            color: var(--color-red);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay-container">
+        
+        <div class="top-bar">
+            <div class="logo-group">
+                <div class="logo-area">
+                    <img src="logo.jpg" onerror="this.src='https://placehold.co/80x80/D50000/121212?text=BAF'" alt="Logo de Bar Power">
+                </div>
+                <span class="logo-text"> <strong>"DE CERO A LEYENDA"</strong></span>
+            </div>
+            
+            <div class="social-tags">
+                <span>STREET WORKOUT</span>
+                <span>#BARPOWER</span>
+                <span>CALISTHENICS</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="stream-space">
+                <span>Espacio para tu C&aacute;mara</span>
+            </div>
+
+            <div class="right-panel">
+                <div class="main-timer-display" id="main-timer-display">
+                    00:00:00
+                </div>
+
+                <div class="timer-control-panel">
+                    <form id="add-timer-form" class="add-timer-form">
+                        <div class="input-group">
+                            <label for="timer-name">Nombre</label>
+                            <input type="text" id="timer-name" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Tiempo (H:M:S)</label>
+                            <div class="time-inputs">
+                                <input type="number" id="input-hours" placeholder="00" min="0" max="99" value="0">
+                                <input type="number" id="input-minutes" placeholder="00" min="0" max="59" value="0">
+                                <input type="number" id="input-seconds" placeholder="00" min="0" max="59" value="0">
+                            </div>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit" class="btn-save">GUARDAR</button>
+                            <button type="button" class="btn-saved" id="btn-show-saved">GUARDADOS</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="chat-panel">
+                    </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="subscribe-group">
+                <i class="fa-solid fa-angles-right" style="color:var(--color-red); font-size:2rem;"></i>
+                <button class="subscribe-btn">SUBSCRIBE</button>
+                <div class="icon-btn"><i class="fa-solid fa-bell"></i></div>
+            </div>
+            <div class="subscribe-group">
+                <div class="icon-btn twitch"><i class="fa-brands fa-twitch"></i></div>
+                <div class="icon-btn youtube"><i class="fa-brands fa-youtube"></i></div>
+            </div>
+            <div class="chat-label">CHAT EN VIVO</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="saved-timers-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Temporizadores Guardados</h3>
+                <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-list-container" id="timer-list-container">
+                </div>
+        </div>
+    </div>
+
+    <audio id="timer-sound" src="Sound.mp3" preload="auto"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addTimerForm = document.getElementById('add-timer-form');
+            const timerListContainer = document.getElementById('timer-list-container');
+            const mainTimerDisplay = document.getElementById('main-timer-display');
+            const timerNameInput = document.getElementById('timer-name');
+            const inputHours = document.getElementById('input-hours');
+            const inputMinutes = document.getElementById('input-minutes');
+            const inputSeconds = document.getElementById('input-seconds');
+            const showSavedBtn = document.getElementById('btn-show-saved');
+            const modalOverlay = document.getElementById('saved-timers-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            // Obtener el elemento de audio
+            const timerSound = document.getElementById('timer-sound');
+
+            let timers = JSON.parse(localStorage.getItem('timers')) || [];
+            let activeTimerId = null;
+            let interval = null;
+
+            // Función para renderizar un temporizador en el modal
+            function renderTimer(timer) {
+                const timerItem = document.createElement('div');
+                timerItem.className = 'modal-list-item';
+                timerItem.setAttribute('data-id', timer.id);
+                
+                // Muestra el tiempo inicial guardado en lugar del restante
+                timerItem.innerHTML = `
+                    <div class="timer-info">
+                        <span class="timer-name">${timer.name}</span>
+                        <span class="timer-remaining">${formatTime(timer.initialTime)}</span>
+                    </div>
+                    <button class="delete-btn" data-id="${timer.id}">&times;</button>
+                `;
+
+                // Event listener para seleccionar el temporizador
+                timerItem.querySelector('.timer-info').addEventListener('click', () => {
+                    selectTimer(timer.id);
+                });
+                
+                // Event listener para el botón de borrar
+                timerItem.querySelector('.delete-btn').addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que el evento de clic en el elemento padre (seleccionar temporizador) se dispare
+                    deleteTimer(timer.id);
+                });
+
+                timerListContainer.appendChild(timerItem);
+            }
+
+            // Selecciona un temporizador de la lista y lo carga en el display principal
+            function selectTimer(id) {
+                const timer = timers.find(t => t.id === id);
+                if (timer) {
+                    setActiveTimer(id);
+                    // Restablece el tiempo restante al tiempo inicial antes de empezar
+                    timer.remainingTime = timer.initialTime;
+                    updateMainDisplay(timer.remainingTime);
+                    closeModal();
+                    // Inicia el temporizador seleccionado
+                    pauseTimer();
+                    startTimer(timer.id);
+                }
+            }
+            
+            // Función para borrar un temporizador
+            function deleteTimer(id) {
+                timers = timers.filter(t => t.id !== id);
+                saveTimers();
+                loadTimersIntoModal(); // Vuelve a cargar la lista para reflejar el cambio
+                
+                // Si se borra el temporizador activo, reinicia el display principal
+                if (activeTimerId === id) {
+                    pauseTimer();
+                    activeTimerId = null;
+                    mainTimerDisplay.textContent = "00:00:00";
+                }
+            }
+
+            // Establece qué temporizador se muestra en el display principal
+            function setActiveTimer(id) {
+                activeTimerId = id;
+            }
+            
+            // Inicia un temporizador
+            function startTimer(id) {
+                const timer = timers.find(t => t.id === id);
+                if (!timer || interval) return;
+
+                interval = setInterval(() => {
+                    if (timer.remainingTime > 0) {
+                        timer.remainingTime--;
+                        if (activeTimerId === id) {
+                           updateMainDisplay(timer.remainingTime);
+                        }
+                        // Nota: no se guarda el tiempo restante aquí para evitar que se sobrescriba
+                        // saveTimers(); // <<-- Esta línea está comentada
+                    } else {
+                        // El temporizador ha terminado
+                        clearInterval(interval);
+                        interval = null;
+                        if (activeTimerId === id) {
+                           // Reproduce el sonido de "beep"
+                           timerSound.play();
+                           // Muestra el mensaje "TIME OUT"
+                           mainTimerDisplay.textContent = "TIME OUT";
+                        }
+                        // El tiempo restante se restablecerá al seleccionar el temporizador de nuevo
+                    }
+                }, 1000);
+            }
+
+            // Pausa un temporizador
+            function pauseTimer() {
+                if (interval) {
+                    clearInterval(interval);
+                    interval = null;
+                }
+            }
+            
+            // Actualiza la pantalla del temporizador principal
+            function updateMainDisplay(seconds) {
+                mainTimerDisplay.textContent = formatTime(seconds);
+            }
+            
+            // Formatea los segundos en HH:MM:SS
+            function formatTime(seconds) {
+                const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+                const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+                const s = String(seconds % 60).padStart(2, '0');
+                return `${h}:${m}:${s}`;
+            }
+
+            // Maneja el envío del formulario para agregar un nuevo temporizador
+            addTimerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const name = timerNameInput.value.trim();
+                const hours = parseInt(inputHours.value) || 0;
+                const minutes = parseInt(inputMinutes.value) || 0;
+                const seconds = parseInt(inputSeconds.value) || 0;
+                
+                const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+                if (name && totalSeconds > 0) {
+                    const newTimer = {
+                        id: Date.now(),
+                        name: name,
+                        initialTime: totalSeconds,
+                        remainingTime: totalSeconds // Guardamos el tiempo inicial y restante
+                    };
+                    timers.push(newTimer);
+                    saveTimers();
+
+                    // Limpia los campos del formulario
+                    timerNameInput.value = '';
+                    inputHours.value = '0';
+                    inputMinutes.value = '0';
+                    inputSeconds.value = '0';
+                }
+            });
+
+            // Persiste los temporizadores en localStorage
+            function saveTimers() {
+                // Modificamos esta función para que solo se guarde el array de timers
+                localStorage.setItem('timers', JSON.stringify(timers));
+            }
+
+            // Carga los temporizadores en el modal
+            function loadTimersIntoModal() {
+                timerListContainer.innerHTML = '';
+                timers.forEach(timer => {
+                    renderTimer(timer);
+                });
+            }
+
+            // Muestra el modal
+            function showModal() {
+                loadTimersIntoModal();
+                modalOverlay.style.display = 'flex';
+            }
+
+            // Oculta el modal
+            function closeModal() {
+                modalOverlay.style.display = 'none';
+            }
+
+            // Event listeners del modal
+            showSavedBtn.addEventListener('click', showModal);
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+
+            // Muestra el primer temporizador al cargar la página si existe
+            if (timers.length > 0) {
+                const firstTimer = timers[0];
+                setActiveTimer(firstTimer.id);
+                // Asegura que el tiempo restante se inicialice al tiempo original
+                firstTimer.remainingTime = firstTimer.initialTime;
+                updateMainDisplay(firstTimer.remainingTime);
+            }
+        });
+    </script>
+</body>
+</html>
