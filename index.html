@@ -22,7 +22,7 @@
             margin: 0;
             padding: 0;
             background-color: var(--color-black);
-            color: white; /* Todos los textos ahora son blancos */
+            color: white;
             font-family: var(--font-family);
             width: 100vw;
             height: 100vh;
@@ -33,12 +33,12 @@
         .overlay-container {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            grid-template-rows: 60px 1fr 50px; 
+            grid-template-rows: 40px 1fr 40px; 
             width: 100%;
             height: 100%;
-            padding: 5px;
+            padding: 2px;
             box-sizing: border-box;
-            gap: 5px;
+            gap: 2px;
         }
 
         /* Área superior con el logo y los textos */
@@ -50,38 +50,37 @@
             justify-content: space-between;
             padding: 0 5px;
             background-color: var(--stream-bg);
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .logo-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
         }
 
         .logo-area img {
-            height: 50px;
-            width: 50px;
+            height: 35px;
+            width: 35px;
             border-radius: 50%;
-            border: 2px solid var(--color-red);
-            box-shadow: 0 0 5px rgba(213, 0, 0, 0.5);
+            border: 1px solid var(--color-red);
+            box-shadow: 0 0 3px rgba(213, 0, 0, 0.5);
         }
         
-        /* Aumento del tamaño de fuente del título */
         .logo-text {
-            font-size: 1.2rem; /* Tamaño más pequeño */
+            font-size: 0.9rem;
             font-weight: 700;
-            color: white; /* Color blanco */
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+            color: white;
+            text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
         }
 
         .social-tags {
             display: flex;
-            gap: 10px;
-            font-size: 0.7rem; /* Tamaño más pequeño */
+            gap: 5px;
+            font-size: 0.6rem;
             font-weight: 600;
-            color: white; /* Color blanco */
+            color: white;
         }
 
         /* Contenedor del stream y el temporizador */
@@ -90,83 +89,83 @@
             grid-row: 2; 
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 5px;
+            gap: 2px;
         }
 
         /* Espacio para la cámara/video */
         .stream-space {
             background-color: rgba(255, 253, 253, 0.05);
             border: 1px solid var(--color-dark-silver);
-            border-radius: 4px;
+            border-radius: 2px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1rem; /* Tamaño más pequeño */
-            color: white; /* Color blanco */
+            font-size: 0.8rem;
+            color: white;
         }
 
         /* Contenedor del temporizador y el chat */
         .right-panel {
             display: grid;
             grid-template-rows: auto 2fr 3fr; 
-            gap: 5px;
+            gap: 2px;
         }
 
         /* Estilo del temporizador principal */
         .main-timer-display {
             background-color: var(--stream-bg);
             border: 1px solid var(--color-dark-silver);
-            border-radius: 4px;
+            border-radius: 2px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Roboto Mono', monospace;
-            font-size: 2vw; /* Tamaño más pequeño */
+            font-size: 1.5vw;
             font-weight: bold;
             color: var(--color-red);
-            text-shadow: 0 0 5px rgba(213, 0, 0, 0.5);
-            padding: 5px;
+            text-shadow: 0 0 3px rgba(213, 0, 0, 0.5);
+            padding: 2px;
             animation: pulse-glow 2s infinite ease-in-out;
-            height: 60px; /* Altura más pequeña */
+            height: 40px;
         }
 
         @keyframes pulse-glow {
-            0% { text-shadow: 0 0 3px rgba(213, 0, 0, 0.5); }
-            50% { text-shadow: 0 0 10px rgba(213, 0, 0, 0.8), 0 0 15px rgba(213, 0, 0, 0.3); }
-            100% { text-shadow: 0 0 3px rgba(213, 0, 0, 0.5); }
+            0% { text-shadow: 0 0 2px rgba(213, 0, 0, 0.5); }
+            50% { text-shadow: 0 0 8px rgba(213, 0, 0, 0.8), 0 0 10px rgba(213, 0, 0, 0.3); }
+            100% { text-shadow: 0 0 2px rgba(213, 0, 0, 0.5); }
         }
 
         /* Panel de control de temporizadores (formulario) */
         .timer-control-panel {
             background-color: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--color-dark-silver);
-            border-radius: 4px;
+            border-radius: 2px;
             padding: 5px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 3px;
             overflow-y: auto;
         }
 
         .add-timer-form {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 3px;
             margin-bottom: 5px;
         }
 
         .input-group label {
-            font-size: 0.7rem; /* Tamaño más pequeño */
-            color: white; /* Color blanco */
+            font-size: 0.6rem;
+            color: white;
         }
 
         .input-group input {
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--color-dark-silver);
-            color: white; /* Color blanco */
-            padding: 4px; /* Tamaño más pequeño */
+            color: white;
+            padding: 3px;
             border-radius: 2px;
-            font-size: 0.7rem; /* Tamaño más pequeño */
+            font-size: 0.6rem;
             outline: none;
             width: 100%;
         }
@@ -174,17 +173,17 @@
         .time-inputs {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 3px;
+            gap: 2px;
         }
 
         .form-buttons {
             display: flex;
-            gap: 5px;
+            gap: 3px;
             justify-content: stretch;
         }
 
         .btn-save, .btn-saved {
-            padding: 4px; /* Tamaño más pequeño */
+            padding: 3px;
             background-color: var(--color-red);
             border: none;
             color: var(--color-black);
@@ -193,25 +192,25 @@
             cursor: pointer;
             transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
             flex-grow: 1;
-            font-size: 0.7rem; /* Tamaño más pequeño */
+            font-size: 0.6rem;
         }
         .btn-save:hover, .btn-saved:hover {
             background-color: #FF1744;
             transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* Área del chat */
         .chat-panel {
             background-color: rgb(255, 255, 255);
             border: 1px solid var(--color-dark-silver);
-            border-radius: 4px;
+            border-radius: 2px;
             padding: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1rem; /* Tamaño más pequeño */
-            color: white; /* Color blanco */
+            font-size: 0.8rem;
+            color: white;
         }
 
         /* Barra de navegación inferior */
@@ -222,7 +221,7 @@
             align-items: center;
             justify-content: space-between;
             background-color: var(--stream-bg);
-            border-radius: 4px;
+            border-radius: 2px;
             padding: 0 5px;
         }
         
@@ -235,14 +234,14 @@
         .subscribe-btn {
             background-color: var(--color-red);
             color: var(--color-black);
-            padding: 5px 10px; /* Tamaño más pequeño */
-            border-radius: 15px;
+            padding: 3px 8px;
+            border-radius: 10px;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s;
-            font-size: 0.7rem; /* Tamaño más pequeño */
+            font-size: 0.6rem;
         }
         .subscribe-btn:hover {
             transform: translateY(-1px);
@@ -251,13 +250,13 @@
         .icon-btn {
             background-color: var(--color-dark-silver);
             color: var(--color-black);
-            width: 28px; /* Tamaño más pequeño */
-            height: 28px; /* Tamaño más pequeño */
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 0.8rem; /* Tamaño más pequeño */
+            font-size: 0.7rem;
             cursor: pointer;
             transition: background-color 0.2s, transform 0.2s;
         }
@@ -269,19 +268,19 @@
         .icon-btn.youtube { background-color: #ff0000; color: white; }
 
         .chat-label {
-            font-size: 0.9rem; /* Tamaño más pequeño */
+            font-size: 0.7rem;
             font-weight: 700;
-            color: white; /* Color blanco */
+            color: white;
             position: relative;
         }
         .chat-label::after {
             content: '';
             position: absolute;
             left: 0;
-            bottom: -3px; /* Posición más arriba */
+            bottom: -2px;
             width: 100%;
-            height: 1px; /* Más delgado */
-            background-color: white; /* Color blanco */
+            height: 1px;
+            background-color: white;
         }
 
         /* Estilos del modal (ventana emergente) */
@@ -303,10 +302,10 @@
         .modal-content {
             background-color: var(--color-black);
             border: 1px solid var(--color-red);
-            border-radius: 8px;
-            padding: 15px; /* Tamaño más pequeño */
+            border-radius: 5px;
+            padding: 10px;
             width: 90%;
-            max-width: 300px; /* Ancho máximo más pequeño */
+            max-width: 250px;
             max-height: 80%;
             display: flex;
             flex-direction: column;
@@ -317,22 +316,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px; /* Margen más pequeño */
+            margin-bottom: 5px;
             border-bottom: 1px solid var(--color-dark-silver);
-            padding-bottom: 5px; /* Padding más pequeño */
+            padding-bottom: 5px;
         }
 
         .modal-header h3 {
             margin: 0;
-            font-size: 1.2rem; /* Tamaño más pequeño */
+            font-size: 1rem;
             color: var(--color-red);
         }
 
         .modal-close-btn {
             background: none;
             border: none;
-            color: white; /* Color blanco */
-            font-size: 1.2rem; /* Tamaño más pequeño */
+            color: white;
+            font-size: 1rem;
             cursor: pointer;
             transition: color 0.2s;
         }
@@ -345,16 +344,16 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 3px;
         }
 
         .modal-list-item {
             background-color: rgba(255, 255, 255, 0.05);
-            padding: 8px; /* Tamaño más pequeño */
-            border-radius: 4px;
+            padding: 5px;
+            border-radius: 3px;
             cursor: pointer;
             transition: background-color 0.2s, transform 0.2s;
-            border-left: 2px solid var(--color-dark-silver);
+            border-left: 1px solid var(--color-dark-silver);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -362,7 +361,7 @@
 
         .modal-list-item:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            transform: translateX(3px);
+            transform: translateX(2px);
             border-left-color: var(--color-red);
         }
 
@@ -373,10 +372,10 @@
         }
         .timer-name {
             font-weight: bold;
-            font-size: 0.9rem; /* Tamaño más pequeño */
+            font-size: 0.7rem;
         }
         .timer-remaining {
-            font-size: 0.8rem; /* Tamaño más pequeño */
+            font-size: 0.6rem;
             color: var(--color-silver);
         }
 
@@ -384,10 +383,10 @@
             background: none;
             border: none;
             color: var(--color-silver);
-            font-size: 1rem; /* Tamaño más pequeño */
+            font-size: 0.8rem;
             cursor: pointer;
             transition: color 0.2s;
-            padding: 3px;
+            padding: 2px;
         }
         .delete-btn:hover {
             color: var(--color-red);
@@ -488,20 +487,17 @@
             const showSavedBtn = document.getElementById('btn-show-saved');
             const modalOverlay = document.getElementById('saved-timers-modal');
             const modalCloseBtn = document.getElementById('modal-close-btn');
-            // Obtener el elemento de audio
             const timerSound = document.getElementById('timer-sound');
 
             let timers = JSON.parse(localStorage.getItem('timers')) || [];
             let activeTimerId = null;
             let interval = null;
 
-            // Función para renderizar un temporizador en el modal
             function renderTimer(timer) {
                 const timerItem = document.createElement('div');
                 timerItem.className = 'modal-list-item';
                 timerItem.setAttribute('data-id', timer.id);
                 
-                // Muestra el tiempo inicial guardado en lugar del restante
                 timerItem.innerHTML = `
                     <div class="timer-info">
                         <span class="timer-name">${timer.name}</span>
@@ -510,42 +506,35 @@
                     <button class="delete-btn" data-id="${timer.id}">&times;</button>
                 `;
 
-                // Event listener para seleccionar el temporizador
                 timerItem.querySelector('.timer-info').addEventListener('click', () => {
                     selectTimer(timer.id);
                 });
                 
-                // Event listener para el botón de borrar
                 timerItem.querySelector('.delete-btn').addEventListener('click', (e) => {
-                    e.stopPropagation(); // Evita que el evento de clic en el elemento padre (seleccionar temporizador) se dispare
+                    e.stopPropagation();
                     deleteTimer(timer.id);
                 });
 
                 timerListContainer.appendChild(timerItem);
             }
 
-            // Selecciona un temporizador de la lista y lo carga en el display principal
             function selectTimer(id) {
                 const timer = timers.find(t => t.id === id);
                 if (timer) {
                     setActiveTimer(id);
-                    // Restablece el tiempo restante al tiempo inicial antes de empezar
                     timer.remainingTime = timer.initialTime;
                     updateMainDisplay(timer.remainingTime);
                     closeModal();
-                    // Inicia el temporizador seleccionado
                     pauseTimer();
                     startTimer(timer.id);
                 }
             }
             
-            // Función para borrar un temporizador
             function deleteTimer(id) {
                 timers = timers.filter(t => t.id !== id);
                 saveTimers();
-                loadTimersIntoModal(); // Vuelve a cargar la lista para reflejar el cambio
+                loadTimersIntoModal();
                 
-                // Si se borra el temporizador activo, reinicia el display principal
                 if (activeTimerId === id) {
                     pauseTimer();
                     activeTimerId = null;
@@ -553,12 +542,10 @@
                 }
             }
 
-            // Establece qué temporizador se muestra en el display principal
             function setActiveTimer(id) {
                 activeTimerId = id;
             }
             
-            // Inicia un temporizador
             function startTimer(id) {
                 const timer = timers.find(t => t.id === id);
                 if (!timer || interval) return;
@@ -569,24 +556,17 @@
                         if (activeTimerId === id) {
                            updateMainDisplay(timer.remainingTime);
                         }
-                        // Nota: no se guarda el tiempo restante aquí para evitar que se sobrescriba
-                        // saveTimers(); // <<-- Esta línea está comentada
                     } else {
-                        // El temporizador ha terminado
                         clearInterval(interval);
                         interval = null;
                         if (activeTimerId === id) {
-                           // Reproduce el sonido de "beep"
                            timerSound.play();
-                           // Muestra el mensaje "TIME OUT"
                            mainTimerDisplay.textContent = "TIME OUT";
                         }
-                        // El tiempo restante se restablecerá al seleccionar el temporizador de nuevo
                     }
                 }, 1000);
             }
 
-            // Pausa un temporizador
             function pauseTimer() {
                 if (interval) {
                     clearInterval(interval);
@@ -594,12 +574,10 @@
                 }
             }
             
-            // Actualiza la pantalla del temporizador principal
             function updateMainDisplay(seconds) {
                 mainTimerDisplay.textContent = formatTime(seconds);
             }
             
-            // Formatea los segundos en HH:MM:SS
             function formatTime(seconds) {
                 const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
                 const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
@@ -607,7 +585,6 @@
                 return `${h}:${m}:${s}`;
             }
 
-            // Maneja el envío del formulario para agregar un nuevo temporizador
             addTimerForm.addEventListener('submit', (e) => {
                 e.preventDefault();
 
@@ -623,12 +600,11 @@
                         id: Date.now(),
                         name: name,
                         initialTime: totalSeconds,
-                        remainingTime: totalSeconds // Guardamos el tiempo inicial y restante
+                        remainingTime: totalSeconds
                     };
                     timers.push(newTimer);
                     saveTimers();
 
-                    // Limpia los campos del formulario
                     timerNameInput.value = '';
                     inputHours.value = '0';
                     inputMinutes.value = '0';
@@ -636,13 +612,10 @@
                 }
             });
 
-            // Persiste los temporizadores en localStorage
             function saveTimers() {
-                // Modificamos esta función para que solo se guarde el array de timers
                 localStorage.setItem('timers', JSON.stringify(timers));
             }
 
-            // Carga los temporizadores en el modal
             function loadTimersIntoModal() {
                 timerListContainer.innerHTML = '';
                 timers.forEach(timer => {
@@ -650,18 +623,15 @@
                 });
             }
 
-            // Muestra el modal
             function showModal() {
                 loadTimersIntoModal();
                 modalOverlay.style.display = 'flex';
             }
 
-            // Oculta el modal
             function closeModal() {
                 modalOverlay.style.display = 'none';
             }
 
-            // Event listeners del modal
             showSavedBtn.addEventListener('click', showModal);
             modalCloseBtn.addEventListener('click', closeModal);
             modalOverlay.addEventListener('click', (e) => {
@@ -670,11 +640,9 @@
                 }
             });
 
-            // Muestra el primer temporizador al cargar la página si existe
             if (timers.length > 0) {
                 const firstTimer = timers[0];
                 setActiveTimer(firstTimer.id);
-                // Asegura que el tiempo restante se inicialice al tiempo original
                 firstTimer.remainingTime = firstTimer.initialTime;
                 updateMainDisplay(firstTimer.remainingTime);
             }
